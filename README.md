@@ -1,0 +1,157 @@
+# custom-pi-agent-config
+
+A curated, optimized skill stack for the **pi coding agent** (`~/.pi/agent`).
+It trims redundancy from the default superpowers / compound / gstack /
+ponytail / design stack, adds session memory + anti-AI-slop rules, and pins a
+set of plugins.
+
+> This repo stores only the **config** (`skills/`, `gsd-core`, `gsd-hooks`,
+> `scripts/`, `extensions/`, `settings.json`, `mcp.json`, bundled CLIs).
+> Caches, model stores, sessions, and secrets (`auth.json`) are git-ignored.
+
+---
+
+## Install
+
+Everything installs into `~/.pi/agent`. pi discovers plugins listed in
+`settings.json` → `packages`. Install each plugin once (they only need to exist
+on disk), then restart pi — the package auto-adds itself to `settings.json`.
+
+### Step 1 — Install plugins
+
+Run these once. Each prints how to register itself; follow the prompt (or add
+the line to `packages` in `~/.pi/agent/settings.json`).
+
+| Plugin | Install command |
+|--------|-----------------|
+| **gstack** (router + specialists: autoplan, review, cso, ios, benchmark…) | `git clone https://github.com/garrytan/gstack ~/.pi/agent/git/github.com/garrytan/gstack` |
+| **gsd-core** (spec/planning/execute/verify workflows, prompt refs) | `npx @opengsd/gsd-core@latest --pi --global` |
+| **compound-engineering** (ce-brainstorm, ce-plan, ce-work, ce-code-review…) | `pi install git:github.com/EveryInc/compound-engineering-plugin` |
+| **ponytail** (lazy-dev review mode) | `pi install git:github.com/DietrichGebert/ponytail` |
+| **pi-serena** (code navigation, symbol editing) | `pi install npm:@bacnh85/pi-serena` |
+| **pi-serena-hooks** | `pi install npm:@lystran/pi-serena-hooks` |
+| **pi-obsidian** (Obsidian vault CLI) | `pi install npm:@bacnh85/pi-obsidian` |
+| **pi-frontend-design** (frontend UI skill) | `pi install npm:@sentiolabs/pi-frontend-design` |
+| **pi-subagents** (delegate to child agents) | `pi install npm:pi-subagents` |
+| **pi-ask-user** (interactive multiple-choice prompts) | `pi install npm:pi-ask-user` |
+| **pi-mcp-adapter** (MCP gateway) | `pi install npm:pi-mcp-adapter` |
+| **pi-llama-cpp** (local model backend) | `pi install npm:pi-llama-cpp` |
+
+### Step 2 — Install bundled CLIs (optional)
+
+`bin/` holds CLIs the stack relies on. If your system already provides them,
+skip. The `go` / `gopls` entries are thin wrappers that resolve to your PATH.
+
+```bash
+# gh  — GitHub CLI  (gstack uses it for PRs)
+# fd  — fast file finder (ripgrep-alt drop-in)
+# Drop the .exe files somewhere on your PATH, e.g.:
+cp bin/gh.exe bin/fd.exe /usr/local/bin/
+```
+
+### Step 3 — Register packages
+
+If a plugin didn't auto-add itself, add it to `packages` in
+`~/.pi/agent/settings.json`:
+
+```jsonc
+"packages": [
+  "npm:pi-llama-cpp",
+  "git:github.com/DietrichGebert/ponytail",
+  "npm:@sentiolabs/pi-frontend-design",
+  "npm:@bacnh85/pi-serena",
+  "npm:pi-mcp-adapter",
+  "npm:@lystran/pi-serena-hooks",
+  "npm:@bacnh85/pi-obsidian",
+  "git:github.com/EveryInc/compound-engineering-plugin",
+  "npm:pi-subagents",
+  "npm:pi-ask-user",
+  "git:github.com/garrytan/gstack"
+]
+```
+
+Then restart pi.
+
+---
+
+## What's in this repo
+
+### `skills/` — the pi skill index
+
+The heart of the stack. pi reads `skills/SKILLS.md` as the index; each entry
+points at a `SKILL.md` that loads on demand.
+
+- **Trimmed index** — the default stack had redundant entry points. This index
+  collapses them:
+  - `superpowers:brainstorming` is marked deprecated → `ce-brainstorm` is the
+    sole primary brainstormer.
+  - gstack `autoplan` / `review` / `cso` are **escalate-only** →
+    `ce-code-review` handles normal changes.
+  - Niche gstack rows (ios-fix/qa/design-review/clean/sync, codex, pair-agent,
+    gbrain setup/sync) are folded into one "rarely used" row.
+- **`project-memory/`** — session memory convention. Copies `.planning/`
+  (`STATE.md`, `PROJECT.md`, `ROADMAP.md`, `REQUIREMENTS.md`) into a project,
+  read-at-start / append-at-end, and feeds Serena / ce-compound / graphify.
+  Templates live under `project-memory/templates/planning/`.
+- **`anti-slop/`** — anti-AI-slop rules (27 code rules + UI taste + banned
+  phrases + comms style). Modeled on `uncodixfy`; wired as a shared checklist,
+  pointing back to `ponytail` (code) and the design skills (taste), not as a
+  parallel authority.
+- **`WORKFLOW.md`** — the full workflow diagram + cross-links + deprecations,
+  moved out of the index to keep the index lean.
+- Design / obsidian / graphify / ponytail / subagents skills — unchanged
+  references from upstream.
+
+### `WORKFLOW.md`
+
+Full diagram of how the stack's pieces connect (brainstorm → plan → spec →
+code → review → verify → ship) and which skill owns each step.
+
+### `gsd-core/`
+
+The GSD Core plugin's shipped content: workflow prompts, gate/reference
+markdown, and templates (AI-SPEC, state, roadmap, ADRs, verification reports…).
+Installed via `npx @opengsd/gsd-core@latest --pi --global`.
+
+### `gsd-hooks/`
+
+Node/Shell hooks that wire gsd into your editor: pre/post tool guards, session
+state, graphify updates, status line, update checks, write/commit guards.
+
+### `scripts/`
+
+Tooling: `changeset/` (versioning + release notes), capability-registry and
+loop-contract generators, slash-command fixer.
+
+### `extensions/`
+
+pi extension manifests.
+
+### `bin/`
+
+Bundled CLIs: `gh.exe` (GitHub CLI), `fd.exe` (file finder), plus `go` /
+`gopls` wrappers. Optional if your system already has these.
+
+### `settings.json`
+
+pi config: theme, thinking-budget tiers, and the `packages` list that pins the
+installed plugins.
+
+### `mcp.json`
+
+MCP server registrations (graphify, serena).
+
+### Root files
+
+`AGENTS.md` (global instructions + lazy-skills guide), `package.json` /
+`package-lock.json` (local npm deps), `gsd-file-manifest.json` (gsd file index).
+
+---
+
+## Reverting / editing
+
+Skills on disk are **not deleted** by this stack — only index pointers in
+`SKILLS.md` are adjusted (deprioritized, never removed). To restore an
+uninstalled/upstream behavior, edit `SKILLS.md`. The `.planning/` memory files
+in any project are yours; `STATE.md` is append/update-only (never rewritten) to
+preserve history.
