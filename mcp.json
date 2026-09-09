@@ -1,0 +1,19 @@
+{
+    "mcpServers":{
+        "graphify": {
+            "command": "C:/Users/MSI/AppData/Roaming/uv/tools/graphifyy/Scripts/python.exe",
+            "args":[
+                "-m",
+                "graphify.serve",
+                "--transport",
+                "stdio",
+                "--graph",
+                "C:/Users/MSI/.graphify/global-graph.json"
+            ]
+        },
+        "serena": {
+        "command": "C:/Users/MSI/.local/bin/serena-agent.exe",
+        "args": ["start-mcp-server", "--project-from-cwd"]
+        }
+    }
+}

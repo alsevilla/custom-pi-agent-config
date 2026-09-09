@@ -1,0 +1,35 @@
+# ---- Caches / regenerable (do NOT commit) ----
+git/
+npm/
+node_modules/
+sessions/
+tmp/
+graphify-out/
+
+# ---- Per-clone caches ----
+**/__pycache__/
+*.pyc
+
+# ---- Secrets / auth (never commit) ----
+auth.json
+
+# ---- Local caches / generated state ----
+mcp-cache.json
+models-store.json
+models.json
+.gsd-profile
+gsd-install-state.json
+gsd-migration-journal/
+
+# ---- Backups ----
+*.bak*
+*.bak.before-*
+*.bak.before-mcp-adapter
+
+# ---- Graphify output (regenerable) ----
+graphify-out/
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+*.swp
