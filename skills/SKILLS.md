@@ -123,6 +123,7 @@ These three are the same engineering discipline at different layers. Load order 
 ## Workflow (one line each — full diagram + cross-links in `WORKFLOW.md`)
 ```
 gsd:/gsd (hub) → ce-brainstorm (scope) → ce-plan → autoplan | gstack-router
+Explore/index → **qmd** search (fallback **obsidian-cli** for unindexed vault bits)
 ce-work (focus mode, tdd) → superpowers:systematic-debugging (clear failures)
 ce-code-review (intent) → gstack autoplan (depth, only if PR needs it) → gstack ship + land-and-deploy
 superpowers:verification-before-completion gates every done; gstack retro + benchmark closes it
@@ -143,5 +144,6 @@ They're registered in `settings.json` `packages` but don't appear as skills here
 - Fix a bug → **systematic-debugging** (not "guess and patch")
 - Build anything → **ce-brainstorm** first (fallback: superpowers:brainstorming), then **tdd** / **writing-plans**
 - Over-engineered code → **ponytail-review**
+- Search local markdown → **qmd** (instant, ranked); fallback to **obsidian-cli** only for vault-specific search the index hasn't captured
 - Boring/generic-looking UI → **design-taste-frontend** (build) or **redesign-existing-projects** (upgrade)
 - Everything → **ponytail** is on by default; the ladder (skip → reuse → stdlib → native → dep → one line → minimum)
