@@ -35,6 +35,16 @@ skills (GSD Core, compound-engineering, gstack) — they're lazy too.
 A task needs a method → read `SKILLS.md` → read the matching `SKILL.md` →
 proceed. The index lists skill, when-to-use, and path for every system.
 
+## PR workflow
+`~/.pi/agent` is a git clone of the main repo. **Never push straight to
+`master`** — every change ships as a PR against `master`.
+
+1. `git checkout -b <short-slug>` (new branch off `master`)
+2. make changes, `git add -A`
+3. `git commit -m "type(scope): imperative, value-first subject"`
+4. `git push -u origin <branch>`
+5. `gh pr create --base master --title "<subject>" --body "<what + why>"`
+
 ### Config (for reference)
 - Always-on packages: `~/.pi/agent/settings.json` → `packages`.
 - Remove a package from that list to make it fully lazy.
