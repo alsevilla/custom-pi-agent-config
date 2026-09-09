@@ -15,8 +15,8 @@ skills (GSD Core, compound-engineering, gstack) — they're lazy too.
 
 ### What stays loaded
 - `ponytail` (persistent mode, already in the system prompt) — on by default.
-- Built-in skills in `~/.pi/agent/skills/` (graphify, obsidian-*, json-canvas,
-  defuddle) — auto-discovered.
+- Built-in skills in `~/.pi/agent/skills/` (obsidian-*, json-canvas, defuddle)
+  — auto-discovered. graphify comes from the `npm:graphify-pi` package.
 - G-Stack extensions loaded at startup: gsd-core (`/gsd`), compound (`ce-*`),
   gstack (router + specialists), pi-subagents, pi-ask-user.
 
