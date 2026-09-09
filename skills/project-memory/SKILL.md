@@ -1,3 +1,8 @@
+---
+name: project-memory
+description: Maintain a project's persistent, cross-session memory (STATE.md, PROJECT.md, ROADMAP.md, REQUIREMENTS.md under .planning/). Use when onboarding a new session, reconstructing context, planning, or tracking project state.
+---
+
 # Project Memory — Explicit Session Memory
 
 Give every project a persistent, cross-session memory so a new session

@@ -22,6 +22,9 @@ Skill `SKILL.md` files load **only when a task matches** — picked from this in
 ### qmd (local markdown search — in `skills/`, auto-discovered)
 - **qmd** — Query local markdown knowledge bases, notes, docs, wikis with QMD (BM25 + semantic + local LLM rerank, all local via node-llama-cpp). Use before web search when the answer may already be in indexed local files; also set up QMD access for a project. Prereq: `npm install -g @tobilu/qmd` (installed globally). Always: search → `qmd get`/`qmd multi-get` full source → answer citing paths/docids. MCP mode also available (`qmd mcp`). Prefer over the Obsidian CLI for search (instant, ranked). | `skills/qmd/SKILL.md`
 
+### graphify (codebase knowledge graph — in `skills/`, auto-discovered)
+- **graphify** — Turn any folder of code/docs/papers/images/video into a persistent navigable knowledge graph (interactive HTML + GraphRAG JSON + plain-language GRAPH_REPORT.md), with query/path/explain. Use to index a codebase, answer architecture questions, or navigate relationships; semi-always-on via the graphify-pi extension (consult `graphify-out/wiki/index.md` → `GRAPH_REPORT.md` → `graph.json` before broad search; run `graphify update .` when code changed). Command: `/graphify <path>` / `--update` / `query` / `path` / `explain`. | `skills/graphify/SKILL.md`
+
 ### obsidian-cli (vault ops — in `skills/`, auto-discovered)
 - **obsidian-cli** — Read/create/edit notes, tags, backlinks, tasks, plugin & theme dev in a running Obsidian vault. Use for vault *operations* (not search — that's `qmd`'s job). Requires Obsidian open. | `skills/obsidian-cli/SKILL.md`
 
@@ -123,7 +126,7 @@ These three are the same engineering discipline at different layers. Load order 
 ## Workflow (one line each — full diagram + cross-links in `WORKFLOW.md`)
 ```
 gsd:/gsd (hub) → ce-brainstorm (scope) → ce-plan → autoplan | gstack-router
-Explore/index → **qmd** search (fallback **obsidian-cli** for unindexed vault bits)
+Explore/index → **graphify** (persistent codebase knowledge graph) → **qmd** search (fallback **obsidian-cli** for unindexed vault bits)
 ce-work (focus mode, tdd) → superpowers:systematic-debugging (clear failures)
 ce-code-review (intent) → gstack autoplan (depth, only if PR needs it) → gstack ship + land-and-deploy
 superpowers:verification-before-completion gates every done; gstack retro + benchmark closes it
@@ -144,6 +147,7 @@ They're registered in `settings.json` `packages` but don't appear as skills here
 - Fix a bug → **systematic-debugging** (not "guess and patch")
 - Build anything → **ce-brainstorm** (superpowers:brainstorming is deprecated — see index), then **tdd** / **writing-plans**
 - Over-engineered code → **ponytail-review**
+- Index/understand a codebase → **graphify** (persistent knowledge graph, semi-always-on via graphify-pi)
 - Search local markdown → **qmd** (instant, ranked); fallback **obsidian-cli** for vault bits the index lacks
 - Boring/generic-looking UI → **design-taste-frontend** (build) or **redesign-existing-projects** (upgrade)
 - Everything → **ponytail** is on by default; the ladder (skip → reuse → stdlib → native → dep → one line → minimum)
