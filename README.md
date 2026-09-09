@@ -148,6 +148,68 @@ MCP server registrations (graphify, serena).
 
 ---
 
+## Updating
+
+Updates depend on how each plugin was installed — npm packages vs git clones.
+
+### npm packages (auto-update)
+
+These are versioned npm packages. pi installs the pinned version once; to get
+newer versions, update them and let pi re-register.
+
+```bash
+pi update npm:@bacnh85/pi-serena          # or: npm update -g <pkg>
+```
+
+Then restart pi — it re-reads the installed version and adds the line back to
+`settings.json` `packages` if needed. To pin a specific version, edit the entry
+to e.g. `npm:@bacnh85/pi-serena@0.4.0`.
+
+> npm packages here: pi-llama-cpp, pi-frontend-design, pi-serena,
+> pi-serena-hooks, pi-obsidian, pi-mcp-adapter, pi-subagents, pi-ask-user.
+
+### git packages (track a branch)
+
+These are cloned from GitHub and referenced by repo URL. They update when the
+upstream branch moves. gstack and compound-engineering and ponytail live under
+`~/.pi/agent/git/github.com/<owner>/<repo>/`.
+
+```bash
+cd ~/.pi/agent/git/github.com/garrytan/gstack
+git pull            # fetch upstream changes into your local clone
+# restart pi to pick up the new code
+```
+
+> git packages here: ponytail, compound-engineering-plugin, gstack.
+
+### gsd-core (npm, npx-managed)
+
+gsd-core was installed via `npx @opengsd/gsd-core@latest --pi --global`. It
+ships as workflow/prompt markdown and hooks. To refresh:
+
+```bash
+npx @opengsd/gsd-core@latest --pi --global    # re-run to pull latest
+```
+
+### This repo's config (skills/, settings.json, mcp.json)
+
+These lines are *yours*. When an upstream plugin updates, only its own code
+changes — it does **not** touch `skills/SKILLS.md`, `settings.json`, or
+`mcp.json`. So:
+
+- Upstream plugin updates → **safe, won't break this config**. The index still
+  points to the same skill names.
+- This repo gets new/changed skills (e.g. a future SKILLS.md tweak) → pull and
+  merge manually. Merge conflicts here mean two sides edited the same pointer;
+  resolve by keeping the intended skill row.
+
+## Updating the bundled CLIs
+
+`gh.exe` and `fd.exe` in `bin/` are static binaries — no auto-update. To get
+newer versions, re-download from their releases and replace the file. If your
+system already has `gh`/`fd` on PATH, you can drop these entirely
+(`git rm --cached bin/gh.exe bin/fd.exe`).
+
 ## Reverting / editing
 
 Skills on disk are **not deleted** by this stack — only index pointers in
