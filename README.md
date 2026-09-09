@@ -132,6 +132,21 @@ pi extension manifests.
 Bundled CLIs: `gh.exe` (GitHub CLI), `fd.exe` (file finder), plus `go` /
 `gopls` wrappers. Optional if your system already has these.
 
+### Installed CLI: qmd
+
+`@tobilu/qmd` is installed globally (via `npm install -g @tobilu/qmd`) but is
+**not** a pi skill — it's a standalone local markdown search/RAG CLI (BM25 +
+semantic + LLM reranking, all local via node-llama-cpp).
+
+```bash
+qmd collection add ~/notes --name notes   # index a folder of documents
+qmd context add qmd://notes "Personal notes and ideas"
+qmd search "how do I reset the plan"       # hybrid search
+```
+
+Upgrade with `npm install -g @tobilu/qmd@latest`. Lives in the global npm
+prefix (resolved from PATH), so nothing to make portable here.
+
 ### `settings.json`
 
 pi config: theme, thinking-budget tiers, and the `packages` list that pins the
