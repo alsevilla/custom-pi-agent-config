@@ -142,8 +142,8 @@ They're registered in `settings.json` `packages` but don't appear as skills here
 ## Quick picks
 
 - Fix a bug → **systematic-debugging** (not "guess and patch")
-- Build anything → **ce-brainstorm** first (fallback: superpowers:brainstorming), then **tdd** / **writing-plans**
+- Build anything → **ce-brainstorm** (superpowers:brainstorming is deprecated — see index), then **tdd** / **writing-plans**
 - Over-engineered code → **ponytail-review**
-- Search local markdown → **qmd** (instant, ranked); fallback to **obsidian-cli** only for vault-specific search the index hasn't captured
+- Search local markdown → **qmd** (instant, ranked); fallback **obsidian-cli** for vault bits the index lacks
 - Boring/generic-looking UI → **design-taste-frontend** (build) or **redesign-existing-projects** (upgrade)
 - Everything → **ponytail** is on by default; the ladder (skip → reuse → stdlib → native → dep → one line → minimum)
