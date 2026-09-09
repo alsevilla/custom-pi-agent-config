@@ -1,3 +1,8 @@
+---
+name: anti-slop
+description: Consolidated anti-AI-slop checklist for writing and code. Use to keep prose, comments, docs, and output human, plain, and free of filler, buzzwords, and AI-generated patterns.
+---
+
 # Anti-Slop Rule — One Checklist, Every Surface
 
 Write like a competent human engineer, not a chatbot. Every word and every line
