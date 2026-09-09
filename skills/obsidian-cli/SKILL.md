@@ -34,6 +34,15 @@ Many commands accept `file` or `path` to target a file. Without either, the acti
 - `file=<name>` — resolves like a wikilink (name only, no path or extension needed)
 - `path=<path>` — exact path from vault root, e.g. `folder/note.md`
 
+## Search: prefer qmd
+
+> **Prefer `qmd` over the Obsidian CLI for search.** qmd does BM25 + semantic +
+> local-LLM rerank search that is instant and returns ranked docs with
+> citations. Use `qmd search`/`qmd query` first when you need to find or
+> retrieve markdown content; reach for the Obsidian CLI only for vault
+> operations the CLI does better (create/edit notes, tags, backlinks, tasks,
+> plugin/theme dev).
+
 ## Vault targeting
 
 Commands target the most recently focused vault by default. Use `vault=<name>` as the first parameter to target a specific vault:

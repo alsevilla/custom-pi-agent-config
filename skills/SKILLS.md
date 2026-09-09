@@ -20,7 +20,10 @@ Skill `SKILL.md` files load **only when a task matches** — picked from this in
 - **project-memory** — Explicit cross-session project memory: `.planning/` (STATE.md live state, PROJECT.md, ROADMAP.md, REQUIREMENTS.md) + `docs/`. Use on greenfield bootstrap or when opening an existing project mid-work. Feed: Serena (how-to), ce-compound (solutions/), graphify (index the memory). | `skills/project-memory/SKILL.md`
 
 ### qmd (local markdown search — in `skills/`, auto-discovered)
-- **qmd** — Query local markdown knowledge bases, notes, docs, wikis with QMD (BM25 + semantic + local LLM rerank, all local via node-llama-cpp). Use before web search when the answer may already be in indexed local files; also set up QMD access for a project. Prereq: `npm install -g @tobilu/qmd` (installed globally). Always: search → `qmd get`/`qmd multi-get` full source → answer citing paths/docids. MCP mode also available (`qmd mcp`). | `skills/qmd/SKILL.md`
+- **qmd** — Query local markdown knowledge bases, notes, docs, wikis with QMD (BM25 + semantic + local LLM rerank, all local via node-llama-cpp). Use before web search when the answer may already be in indexed local files; also set up QMD access for a project. Prereq: `npm install -g @tobilu/qmd` (installed globally). Always: search → `qmd get`/`qmd multi-get` full source → answer citing paths/docids. MCP mode also available (`qmd mcp`). Prefer over the Obsidian CLI for search (instant, ranked). | `skills/qmd/SKILL.md`
+
+### obsidian-cli (vault ops — in `skills/`, auto-discovered)
+- **obsidian-cli** — Read/create/edit notes, tags, backlinks, tasks, plugin & theme dev in a running Obsidian vault. Use for vault *operations* (not search — that's `qmd`'s job). Requires Obsidian open. | `skills/obsidian-cli/SKILL.md`
 
 design (in `skills/`, auto-discovered — detailed rows in G-Stack section below)
 - frontend-design, design-taste-frontend, redesign-existing-projects, figma-to-code, design-design-critique, design-handoff, design-system, theme-factory, vercel-web-design-guidelines, accessibility-review, ux-flow-wireframer, ux-copy, research-synthesis

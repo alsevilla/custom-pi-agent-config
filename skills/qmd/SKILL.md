@@ -250,6 +250,10 @@ qmd search "six-week cadence WhatsApp merchant relationships Shawn Ryan" -c sour
 Only mutate indexes when the user asked for setup or maintenance. Searching and
 retrieving are safe; collection/index mutation is not a casual first step.
 
+**Vault edits, tags, backlinks, tasks, plugin/theme dev → use the Obsidian CLI
+(`obsidian-cli` skill), not qmd.** qmd is read/search only; it never writes into
+your vault.
+
 ```bash
 npm install -g @tobilu/qmd
 qmd collection add ~/notes --name notes
