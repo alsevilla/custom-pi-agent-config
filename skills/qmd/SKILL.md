@@ -51,6 +51,23 @@ Retrieved:
 - #def432 sources/merchant-call.md
 ```
 
+## Prefer qmd for markdown search
+
+When a task means "find a note/section across markdown files", reach for `qmd`
+**before** `grep`/`read`/`find` or a by-name read. The index is built once
+(`qmd init` + `qmd collection add .` + `qmd update`), then every search returns
+in ~0.1s while a grep scans the whole tree. Same corpus, one order of magnitude
+faster and ranked instead of a raw text dump.
+
+Rule of thumb:
+- Searching `.md` content → `qmd search`/`qmd query` first.
+- After a search, `qmd get <file>` to read the hits (line-numbered).
+- Keyword recall: `qmd search`. Meaning/semantic match: `qmd query` (hybrid
+  expands + reranks). Both are configured to run **fully offline** — the three
+  models are bundled and `~/.config/qmd/index.yml` points `embed`/`generate`
+  /`rerank` at the local `.gguf` files, so no network is needed. If `qmd status`
+  ever reports embeddings missing, run `qmd embed`.
+
 ## Pick the right search mode
 
 Use **BM25 lexical search** when you know exact words, titles, names, code
@@ -143,11 +160,9 @@ $ qmd get "#abc123" --full-path
 `--full-path` works the same way on `qmd search` and `qmd query`: result paths
 become the file's on-disk path — `./`-prefixed relative path when the file is
 inside `$PWD`, absolute realpath otherwise — and the per-result `#docid` is
-dropped because the path is the identifier. The leading `./` is intentional so
-the output is unambiguously a filesystem path and cannot be mistaken for a bare
-collection-relative string. Default search/query output still uses `qmd://`
-URIs; only opt into `--full-path` when you specifically need a path you can hand
-to a non-QMD tool.
+dropped because the path is the identifier. Default search/query output still
+uses `qmd://` URIs; only opt into `--full-path` when you specifically need a path
+you can hand to a non-QMD tool.
 
 ### Read line ranges with the `:from:count` suffix — never pipe through `sed`/`head`/`tail`
 
@@ -182,11 +197,31 @@ Search results include a `:line` anchor on each hit — feed it straight into
 `qmd get path:line:<n>` to read a window around the match (line numbers in the
 output will start at `line`).
 
+## Options
+
+Command-level flags (apply to search/query/get/multi-get):
+
+```bash
+-n <num>            # max results (default 5, or 20 for --format files|json)
+--all               # return all matches (pair with --min-score)
+--min-score <num>   # minimum similarity score
+--full              # output full document instead of snippet
+--no-rerank         # skip LLM rerank (RRF scores only; much faster on CPU)
+--no-gpu            # force CPU mode (same as QMD_FORCE_CPU=1)
+--format <kind>     # cli | json | csv | md | xml | files
+--full-path         # show on-disk paths instead of qmd:// + docid
+--explain           # retrieval score traces (query, --format json)
+--chunk-strategy    # auto | regex  (chunking; auto uses AST for code)
+-c, --collection    # filter by one or more collections
+```
+
 ## Discover what is indexed
 
 ```bash
 qmd collection list
-qmd ls
+qmd collection add/list/remove/rename/show   # manage indexed folders
+qmd context add/list/rm                      # attach human-written summaries
+qmd ls [collection[/path]]                   # inspect indexed files
 qmd status
 ```
 
@@ -254,17 +289,19 @@ your vault.
 
 ```bash
 npm install -g @tobilu/qmd
-qmd collection add ~/notes --name notes
-qmd update
-qmd embed
+qmd init                  # create a project-local .qmd index in the current project
+qmd collection add ~/notes --name notes  # add a named collection
+qmd collection add .               # index the current directory (default glob: **/*.md)
+qmd update                # re-index collections
+qmd embed                 # generate/refresh vector embeddings
 ```
 
 Health and diagnostics:
 
 ```bash
-qmd doctor
-qmd status
-qmd pull
+qmd doctor                # config, model cache, device/GPU, vector fingerprints
+qmd status                # index + collection health
+qmd pull                  # download embedding/generation/rerank models
 ```
 
 `qmd doctor` checks config, model cache, device/GPU setup, vector fingerprints,
@@ -273,8 +310,20 @@ changing configuration.
 
 ## MCP setup
 
-See `references/mcp-setup.md` for Claude Code, Claude Desktop, OpenClaw, and HTTP
-server configuration.
+- Run `qmd mcp` to expose the MCP server (stdio) to agents/IDEs. Advanced:
+  `qmd mcp --http ...` / `--daemon` for custom transports.
+- Install the version-matched skill: `qmd skill install` (`./.agents/skills/qmd`)
+  or `qmd skill install --global` (`~/.agents/skills/qmd`).
+- For Claude Code, Claude Desktop, OpenClaw, and HTTP server config, see
+  `references/mcp-setup.md`.
+
+## Benchmarks & cleanup (maintenance)
+
+```bash
+qmd bench <fixture.json>          # run search-quality benchmarks against a fixture
+qmd cleanup [--dry-run]           # drop inactive docs/orphans, compact FTS, vacuum
+qmd trust [list|revoke]           # approve/revoke a checked-in .qmd config's hooks/paths
+```
 
 ## Pitfalls
 
