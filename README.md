@@ -99,8 +99,8 @@ points at a `SKILL.md` that loads on demand.
   parallel authority.
 - **`WORKFLOW.md`** — the full workflow diagram + cross-links + deprecations,
   moved out of the index to keep the index lean.
-- Design / obsidian / graphify / ponytail / subagents skills — unchanged
-  references from upstream.
+- Design / obsidian / ponytail / subagents skills — unchanged references from
+  upstream. graphify is provided by `npm:graphify-pi`.
 
 ### `WORKFLOW.md`
 
