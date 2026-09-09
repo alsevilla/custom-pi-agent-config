@@ -1,2 +1,2 @@
 #!/bin/bash
-exec "/C/Users/MSI/Local/go/go/bin/go.exe" "$@"
+exec "$HOME/Local/go/go/bin/go.exe" "$@"

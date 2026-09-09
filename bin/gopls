@@ -1,2 +1,2 @@
 #!/bin/bash
-exec "/C/Users/MSI/go/bin/gopls.exe" "$@"
+exec "$HOME/go/bin/gopls.exe" "$@"
