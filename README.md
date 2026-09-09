@@ -134,9 +134,9 @@ Bundled CLIs: `gh.exe` (GitHub CLI), `fd.exe` (file finder), plus `go` /
 
 ### Installed CLI: qmd
 
-`@tobilu/qmd` is installed globally (via `npm install -g @tobilu/qmd`) but is
-**not** a pi skill — it's a standalone local markdown search/RAG CLI (BM25 +
-semantic + LLM reranking, all local via node-llama-cpp).
+`@tobilu/qmd` is installed globally (via `npm install -g @tobilu/qmd`) and is
+exposed as a pi skill (`qmd`) — a local markdown search/RAG CLI (BM25 + semantic
++ LLM reranking, all local via node-llama-cpp).
 
 ```bash
 qmd collection add ~/notes --name notes   # index a folder of documents

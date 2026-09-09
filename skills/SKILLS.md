@@ -19,6 +19,9 @@ Skill `SKILL.md` files load **only when a task matches** — picked from this in
 ### project-memory (session memory — in `skills/`, auto-discovered)
 - **project-memory** — Explicit cross-session project memory: `.planning/` (STATE.md live state, PROJECT.md, ROADMAP.md, REQUIREMENTS.md) + `docs/`. Use on greenfield bootstrap or when opening an existing project mid-work. Feed: Serena (how-to), ce-compound (solutions/), graphify (index the memory). | `skills/project-memory/SKILL.md`
 
+### qmd (local markdown search — in `skills/`, auto-discovered)
+- **qmd** — Query local markdown knowledge bases, notes, docs, wikis with QMD (BM25 + semantic + local LLM rerank, all local via node-llama-cpp). Use before web search when the answer may already be in indexed local files; also set up QMD access for a project. Prereq: `npm install -g @tobilu/qmd` (installed globally). Always: search → `qmd get`/`qmd multi-get` full source → answer citing paths/docids. MCP mode also available (`qmd mcp`). | `skills/qmd/SKILL.md`
+
 design (in `skills/`, auto-discovered — detailed rows in G-Stack section below)
 - frontend-design, design-taste-frontend, redesign-existing-projects, figma-to-code, design-design-critique, design-handoff, design-system, theme-factory, vercel-web-design-guidelines, accessibility-review, ux-flow-wireframer, ux-copy, research-synthesis
 
