@@ -138,7 +138,6 @@ They're registered in `settings.json` `packages` but don't appear as skills here
 | Skill | When to use | Location |
 |---|---|---|
 | `npm:@bacnh85/pi-serena` | Semantic code tools (understand/refactor a codebase) via a persistent worker. Use for codebase architecture questions, refactors, or large multi-file changes. Binary: `serena` (also `serena-agent` on PATH). | `~/.pi/agent/npm/node_modules/@bacnh85/pi-serena/` |
-| `npm:@lystran/pi-serena-hooks` | Runs Serena lifecycle hooks (on agent start/stop, before/after edits) from the Pi agent. Use when Serena hooks are installed and need to fire during agent runs. | `~/.pi/agent/npm/node_modules/@lystran/pi-serena-hooks/` |
 
 ---
 

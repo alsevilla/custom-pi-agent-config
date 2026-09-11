@@ -16,9 +16,11 @@ skills (GSD Core, compound-engineering, gstack) — they're lazy too.
 ### What stays loaded
 - `ponytail` (persistent mode, already in the system prompt) — on by default.
 - Built-in skills in `~/.pi/agent/skills/` (obsidian-*, json-canvas, defuddle)
-  — auto-discovered. graphify comes from the `npm:graphify-pi` package.
-- G-Stack extensions loaded at startup: gsd-core (`/gsd`), compound (`ce-*`),
-  gstack (router + specialists), pi-subagents, pi-ask-user.
+  — auto-discovered.
+- Extensions loaded at startup (always-on tools/lifecycle, not lazy skills —
+  keep in `packages`; do not remove to slim down): graphify-pi, pi-serena,
+  gsd-core (`/gsd`), compound (`ce-*`), gstack (router + specialists),
+  pi-subagents, pi-ask-user.
 
 ### What is lazy (read `SKILLS.md`, then load the one you need)
 - **superpowers** system (brainstorming, writing-plans, TDD, systematic-debugging,
@@ -48,3 +50,6 @@ proceed. The index lists skill, when-to-use, and path for every system.
 ### Config (for reference)
 - Always-on packages: `~/.pi/agent/settings.json` → `packages`.
 - Remove a package from that list to make it fully lazy.
+- **Do not remove `npm:graphify-pi` or `npm:@bacnh85/pi-serena`** — they are
+  always-on extensions (tools + lifecycle), not lazy markdown skills. Slimming
+  the list only targets lazy skill packages (e.g. superpowers, G-Stack).
